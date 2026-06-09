@@ -1,9 +1,7 @@
 .venv/
-.venv/
 __pycache__/
 *.py[cod]
 .pytest_cache/
-coverage/
 .coverage
 htmlcov/
 dist/
@@ -11,5 +9,8 @@ build/
 *.egg-info/
 .DS_Store
 .env
-.pytest_cache/
-.coverage
+.svn
+tags
+*.swp
+*.swo
+*~
