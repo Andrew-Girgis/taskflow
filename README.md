@@ -111,4 +111,5 @@ Feel free to contribute by opening issues or submitting pull requests. For major
 
 ## Author
 
-Andrew Girgis
+Andrew Girgis 
+With the help of @cohere's North Code Mini and @opencode
