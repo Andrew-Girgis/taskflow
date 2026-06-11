@@ -30,15 +30,28 @@ def add(title, description, priority, tags):
 @click.option("--completed/--pending", "show_completed", default=None, help="Filter by completion status")
 @click.option("--priority", "-p", type=click.Choice([p.value for p in Priority]), help="Filter by priority")
 @click.option("--tag", "-t", help="Filter by tag")
-@click.option("--all", "show_all", is_flag=True, help="Show all tasks (default)")
+@click.option("--all", "show_all", is_flag=True, help="Show all tasks")
 def list(show_completed, priority, tag, show_all):
     """List tasks."""
     taskflow = TaskFlow()
-    tasks = taskflow.list_tasks(
-        completed=show_completed if show_completed is not None else None,
-        priority=Priority(priority) if priority else None,
-        tag=tag if tag else None,
-    )
+    if show_all:
+        tasks = taskflow.list_tasks(
+            completed=None,
+            priority=Priority(priority) if priority else None,
+            tag=tag if tag else None,
+        )
+    elif show_completed is not None:
+        tasks = taskflow.list_tasks(
+            completed=show_completed,
+            priority=Priority(priority) if priority else None,
+            tag=tag if tag else None,
+        )
+    else:
+        tasks = taskflow.list_tasks(
+            completed=False,
+            priority=Priority(priority) if priority else None,
+            tag=tag if tag else None,
+        )
 
     if not tasks:
         click.echo("No tasks found.")
@@ -116,11 +129,18 @@ def delete(task_id):
 def stats(show_completed, priority, tag):
     """Show task statistics."""
     taskflow = TaskFlow()
-    tasks = taskflow.list_tasks(
-        completed=show_completed if show_completed is not None else None,
-        priority=Priority(priority) if priority else None,
-        tag=tag if tag else None,
-    )
+    if show_completed is not None:
+        tasks = taskflow.list_tasks(
+            completed=show_completed,
+            priority=Priority(priority) if priority else None,
+            tag=tag if tag else None,
+        )
+    else:
+        tasks = taskflow.list_tasks(
+            completed=False,
+            priority=Priority(priority) if priority else None,
+            tag=tag if tag else None,
+        )
 
     total = len(tasks)
     completed = sum(1 for task in tasks if task.completed)
