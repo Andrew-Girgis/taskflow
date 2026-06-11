@@ -111,4 +111,4 @@ Feel free to contribute by opening issues or submitting pull requests. For major
 
 ## Author
 
-Your Name
+Andrew Girgis
